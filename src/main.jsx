@@ -1,10 +1,17 @@
-import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react";
+import {
+  useCallback,
+  useDeferredValue,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { createRoot } from "react-dom/client";
 import { Archive } from "./components/Archive";
 import { Hero } from "./components/Hero";
 import { SiteFooter, SiteHeader } from "./components/SiteChrome";
 import { POSTS } from "./data/posts";
 import "./styles.css";
+import { Analytics } from "@vercel/analytics/react";
 
 function App() {
   const [filter, setFilter] = useState("all");
@@ -49,38 +56,41 @@ function App() {
     );
 
   return (
-    <main>
-      <div className="cosmos" aria-hidden="true">
-        <span />
-        <span />
-        <span />
-      </div>
-      <SiteHeader />
-      <Hero
-        post={POSTS[featuredIndex]}
-        index={featuredIndex}
-        total={POSTS.length}
-        onNext={showNextPost}
-      />
-      <Archive
-        posts={visiblePosts}
-        filter={filter}
-        query={query}
-        page={currentPage}
-        totalPages={totalPages}
-        onFilterChange={(nextFilter) => {
-          setFilter(nextFilter);
-          setPage(1);
-        }}
-        onQueryChange={(nextQuery) => {
-          setQuery(nextQuery);
-          setPage(1);
-        }}
-        onReset={resetArchive}
-        onPageChange={setPage}
-      />
-      <SiteFooter />
-    </main>
+    <div>
+      <main>
+        <div className="cosmos" aria-hidden="true">
+          <span />
+          <span />
+          <span />
+        </div>
+        <SiteHeader />
+        <Hero
+          post={POSTS[featuredIndex]}
+          index={featuredIndex}
+          total={POSTS.length}
+          onNext={showNextPost}
+        />
+        <Archive
+          posts={visiblePosts}
+          filter={filter}
+          query={query}
+          page={currentPage}
+          totalPages={totalPages}
+          onFilterChange={(nextFilter) => {
+            setFilter(nextFilter);
+            setPage(1);
+          }}
+          onQueryChange={(nextQuery) => {
+            setQuery(nextQuery);
+            setPage(1);
+          }}
+          onReset={resetArchive}
+          onPageChange={setPage}
+        />
+        <SiteFooter />
+      </main>
+      <Analytics />
+    </div>
   );
 }
 
