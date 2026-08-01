@@ -1,0 +1,8 @@
+node_modules/
+dist/
+.env
+data/*.json
+!data/.gitkeep
+cookies.json
+scripts/cookies.json
+venv
