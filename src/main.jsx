@@ -1,4 +1,4 @@
-import { useCallback, useDeferredValue, useMemo, useState } from "react";
+import { useCallback, useDeferredValue, useEffect, useMemo, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { Archive } from "./components/Archive";
 import { Hero } from "./components/Hero";
@@ -10,6 +10,7 @@ function App() {
   const [filter, setFilter] = useState("all");
   const [query, setQuery] = useState("");
   const [featuredIndex, setFeaturedIndex] = useState(0);
+  const [page, setPage] = useState(1);
   const deferredQuery = useDeferredValue(query);
 
   const filteredPosts = useMemo(() => {
@@ -21,6 +22,13 @@ function App() {
     );
   }, [deferredQuery, filter]);
 
+  const totalPages = Math.max(1, Math.ceil(filteredPosts.length / 4));
+  const currentPage = Math.min(page, totalPages);
+  const visiblePosts = useMemo(() => {
+    const start = (currentPage - 1) * 4;
+    return filteredPosts.slice(start, start + 4);
+  }, [filteredPosts, currentPage]);
+
   const showNextPost = useCallback(() => {
     setFeaturedIndex((currentIndex) => (currentIndex + 1) % POSTS.length);
   }, []);
@@ -28,7 +36,12 @@ function App() {
   const resetArchive = useCallback(() => {
     setFilter("all");
     setQuery("");
+    setPage(1);
   }, []);
+
+  useEffect(() => {
+    setPage(1);
+  }, [filter, query]);
 
   if (!POSTS.length)
     return (
@@ -50,12 +63,21 @@ function App() {
         onNext={showNextPost}
       />
       <Archive
-        posts={filteredPosts}
+        posts={visiblePosts}
         filter={filter}
         query={query}
-        onFilterChange={setFilter}
-        onQueryChange={setQuery}
+        page={currentPage}
+        totalPages={totalPages}
+        onFilterChange={(nextFilter) => {
+          setFilter(nextFilter);
+          setPage(1);
+        }}
+        onQueryChange={(nextQuery) => {
+          setQuery(nextQuery);
+          setPage(1);
+        }}
         onReset={resetArchive}
+        onPageChange={setPage}
       />
       <SiteFooter />
     </main>

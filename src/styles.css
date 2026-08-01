@@ -178,7 +178,7 @@ nav {
     Georgia,
     serif;
   font-style: italic;
-  letter-spacing: -0.075em;
+  letter-spacing: -0.045em;
 }
 .hero-highlight-badge {
   display: inline-flex;
@@ -589,6 +589,7 @@ nav {
 footer {
   display: flex;
   justify-content: space-between;
+  gap: 24px;
   padding: 27px 5.4vw;
   border-top: 1px solid rgba(240, 236, 228, 0.14);
   color: #85847f;
@@ -596,6 +597,30 @@ footer {
     500 9px "DM Mono",
     monospace;
   letter-spacing: 0.1em;
+}
+.footer-note {
+  flex: 1;
+  max-width: 760px;
+  color: #b7b0a1;
+  font:
+    400 11px/1.7 Manrope,
+    Arial,
+    sans-serif;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
+.footer-note p {
+  margin: 0 0 8px;
+}
+.footer-credit {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  color: #d3b27a;
+}
+.footer-credit a {
+  color: inherit;
+  text-decoration: none;
 }
 @media (max-width: 720px) {
   nav {

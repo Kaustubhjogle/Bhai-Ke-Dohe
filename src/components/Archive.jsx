@@ -39,9 +39,12 @@ export const Archive = memo(function Archive({
   posts,
   filter,
   query,
+  page,
+  totalPages,
   onFilterChange,
   onQueryChange,
   onReset,
+  onPageChange,
 }) {
   return (
     <section className="archive" id="archive">
@@ -55,7 +58,6 @@ export const Archive = memo(function Archive({
           </h2>
         </div>
         <p className="archive-note">
-          No trailers. No launches. No promotion.
           <br />
           Just the tweets that stayed with us.
         </p>
@@ -94,6 +96,27 @@ export const Archive = memo(function Archive({
           </div>
         )}
       </div>
+      {totalPages > 1 && (
+        <div className="pagination">
+          <button
+            className="pagination__button"
+            onClick={() => onPageChange(Math.max(1, page - 1))}
+            disabled={page === 1}
+          >
+            Prev
+          </button>
+          <span>
+            Page {page} / {totalPages}
+          </span>
+          <button
+            className="pagination__button"
+            onClick={() => onPageChange(Math.min(totalPages, page + 1))}
+            disabled={page === totalPages}
+          >
+            Next
+          </button>
+        </div>
+      )}
     </section>
   );
 });
