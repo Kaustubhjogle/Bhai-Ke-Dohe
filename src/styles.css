@@ -180,6 +180,26 @@ nav {
   font-style: italic;
   letter-spacing: -0.075em;
 }
+.hero-highlight-badge {
+  display: inline-flex;
+  align-self: flex-start;
+  margin-bottom: 12px;
+  padding: 7px 10px;
+  border: 1px solid rgba(240, 236, 228, 0.25);
+  border-radius: 999px;
+  color: #f4d9a3;
+  font:
+    500 10px "DM Mono",
+    monospace;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.entry--highlight {
+  box-shadow: inset 0 0 0 1px rgba(244, 217, 163, 0.35);
+}
+.entry--highlight .post-card {
+  border: 1px solid rgba(244, 217, 163, 0.35);
+}
 .hero-date {
   position: absolute;
   top: 46%;
@@ -423,10 +443,10 @@ nav {
   inset: 30px 28px auto;
   color: rgba(236, 232, 223, 0.105);
   font-family: "Playfair Display", Georgia, serif;
-  font-size: clamp(3.7rem, 7vw, 6.5rem);
+  font-size: clamp(1.7rem, 2.5vw, 3.5rem);
   font-style: italic;
   line-height: 0.83;
-  letter-spacing: -0.075em;
+  letter-spacing: -0.045em;
   overflow-wrap: anywhere;
 }
 .date-layer {
@@ -643,7 +663,7 @@ footer {
     min-height: 390px;
   }
   .quote-layer {
-    font-size: 4.4rem;
+    font-size: 1.4rem;
     inset: 24px 20px auto;
   }
   .post-card {

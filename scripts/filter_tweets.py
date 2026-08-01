@@ -108,6 +108,11 @@ def clean_text(value):
     text = str(value or "").strip()
     text = re.sub(r"\s+", " ", text)
     text = re.sub(r"\s+([,.!?;:])", r"\1", text)
+
+    text = re.sub(r"(?<!\S)(@\w[\w.]*)\s+(https?://|www\.)\S+", r"\1", text)
+    text = re.sub(r"(https?://|www\.)\S+", "", text)
+    text = re.sub(r"\s+", " ", text)
+    text = re.sub(r"\s+([,.!?;:])", r"\1", text)
     return text.strip()
 
 
@@ -153,7 +158,7 @@ def build_curated_tweets():
         if not isinstance(item, dict):
             continue
 
-        text = clean_text(
+        raw_text = (
             item.get("text")
             or item.get("full_text")
             or item.get("content")
@@ -161,6 +166,7 @@ def build_curated_tweets():
             or item.get("body")
             or ""
         )
+        text = clean_text(raw_text)
         if not text:
             continue
         if contains_blocked(text) or is_movie_related(text):
@@ -190,7 +196,7 @@ def build_curated_tweets():
             "retweets": retweets,
             "replies": replies,
             "views": views,
-            "with_url": "yes" if has_url(text) else "no",
+            "with_url": "yes" if has_url(raw_text) else "no",
         }
         entry["_score"] = score_tweet(text, likes)
         curated.append(entry)

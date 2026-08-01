@@ -5,7 +5,10 @@ import { ProfileIdentity } from "./ProfileIdentity";
 const TweetCard = memo(function TweetCard({ post, index }) {
   const id = String(index + 1).padStart(2, "0");
   return (
-    <article className="entry" style={{ "--entry": index }}>
+    <article
+      className={`entry${post.highlight ? " entry--highlight" : ""}`}
+      style={{ "--entry": index }}
+    >
       <div className="quote-layer" aria-hidden="true">
         {post.text}
       </div>
